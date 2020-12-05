@@ -1,3 +1,6 @@
+/* eslint-disable arrow-parens */
+/* eslint-disable react/jsx-one-expression-per-line */
+
 import React, { useState, useEffect } from 'react';
 
 import TodoItem from './TodoItem';
@@ -39,8 +42,7 @@ function TodoList() {
   const onEditTodoClick = (id, editValue) => {
     const newTodoList = todoList.map((element) => {
       if (element.id === id) {
-        element.isEdit = !element.isEdit;
-        element.todo = editValue;
+        return { ...element, isEdit: !element.isEdit, todo: editValue };
       }
       return element;
     });
@@ -55,7 +57,7 @@ function TodoList() {
   const onToggleDoneTodoClick = (id) => {
     const newTodoList = todoList.map((element) => {
       if (element.id === id) {
-        element.isDone = !element.isDone;
+        return { ...element, isDone: !element.isDone };
       }
       return element;
     });
@@ -81,17 +83,27 @@ function TodoList() {
             />
           </div>
           <div className="col-sm-2 col-form-label">
-            <button className="btn btn-primary" onClick={onAddTodoClick}>
+            <button
+              className="btn btn-primary"
+              type="button"
+              onClick={onAddTodoClick}
+            >
               新增
             </button>
           </div>
         </div>
       </div>
       <div className="d-flex justify-content-around mb-3 todo-btns">
-        <button className="btn btn-primary todo-all active">全部任務</button>
-        <button className="btn btn-success todo-done__all">已完成</button>
-        <button className="btn btn-info todo-undone">未完成</button>
-        <button className="btn btn-danger todo-delete__completed">
+        <button className="btn btn-primary todo-all active" type="button">
+          全部任務
+        </button>
+        <button className="btn btn-success todo-done__all" type="button">
+          已完成
+        </button>
+        <button className="btn btn-info todo-undone" type="button">
+          未完成
+        </button>
+        <button className="btn btn-danger todo-delete__completed" type="button">
           刪除已完成任務
         </button>
       </div>
