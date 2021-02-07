@@ -3,17 +3,13 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 
-import TodoItem from './TodoItem';
+import TodoItem from 'views/TodoList/TodoItem';
+import { DangerButton } from 'components/Button';
 
 function TodoList() {
   const [todoList, setTodoList] = useState([]);
   const [todoAddInputValue, setTodoAddInputValue] = useState('');
   const [todoType, setTodoType] = useState('all');
-
-  // useEffect(() => {
-  //   console.log('todoAddInputValue', todoAddInputValue);
-  //   console.log('todoList', todoList);
-  // }, [todoAddInputValue, todoList]);
 
   useEffect(() => {
     console.log(
@@ -131,16 +127,14 @@ function TodoList() {
         >
           未完成
         </button>
-        <button
-          className="btn btn-danger"
-          type="button"
+        <DangerButton
           onClick={() => {
-            // setTodoType('deleteAll'); // 會有奇怪的 bug,當刪除全部後再新增 todo 時不會被 render 出來，還要再點選任意 todoType 按鈕才會 render
+            setTodoType('all');
             setTodoList([]);
           }}
         >
           刪除全部
-        </button>
+        </DangerButton>
       </div>
       <ul className="list-group list-group-flush todo-list">
         {filterTodoList.map((element) => (
