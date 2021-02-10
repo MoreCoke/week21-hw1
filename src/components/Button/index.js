@@ -54,3 +54,12 @@ export const PrimaryButton = styled(Button)`
     border-color: ${theme.primary};
   }
 `;
+
+export const SuccessButton = styled(Button)`
+  background-color: ${theme.success};
+  border-color: ${theme.success};
+  color: ${theme.white};
+  &:focus {
+    border-color: ${theme.success};
+  }
+`;
