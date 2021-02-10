@@ -13,7 +13,7 @@ import {
   TodoItemEditInput,
   TodoItemLabel,
   TodoItemButtons,
-} from 'views/TodoList/TodoItem/style';
+} from 'views/TodoList/components/TodoItem/style';
 import { WarningButton, DangerButton } from 'components/Button';
 
 export default function TodoItem({

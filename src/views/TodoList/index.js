@@ -3,12 +3,18 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 
-import TodoItem from 'views/TodoList/TodoItem';
-import { DangerButton } from 'components/Button';
+import { Container, FilterButtons, List } from 'views/TodoList/style';
+import TodoItem from 'views/TodoList/components/TodoItem';
+import TodoAddBar from 'views/TodoList/components/TodoAddBar';
+import {
+  PrimaryButton,
+  SuccessButton,
+  InfoButton,
+  DangerButton,
+} from 'components/Button';
 
 function TodoList() {
   const [todoList, setTodoList] = useState([]);
-  const [todoAddInputValue, setTodoAddInputValue] = useState('');
   const [todoType, setTodoType] = useState('all');
 
   useEffect(() => {
@@ -18,22 +24,14 @@ function TodoList() {
     );
   }, [todoList]);
 
-  const onAddTodoClick = () => {
-    if (!todoAddInputValue) return;
+  const onAddTodoClick = (title) => {
     const todo = {
       id: new Date().getTime(),
-      todo: todoAddInputValue,
+      todo: title,
       isDone: false,
       isEdit: false,
     };
     setTodoList((prevTodoList) => [todo, ...prevTodoList]);
-    setTodoAddInputValue('');
-  };
-
-  const onAddTodoKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      onAddTodoClick();
-    }
   };
 
   const onEditTodoClick = (id, editValue) => {
@@ -76,57 +74,17 @@ function TodoList() {
     }
   }, [todoList, todoType]);
 
-  const onAddInputValueChange = (e) => {
-    setTodoAddInputValue(e.target.value);
-  };
-
   return (
-    <div className="TodoList container">
-      <div className="p-4 todo-add">
-        <div className="form-group row">
-          <div className="col-sm-10 d-flex align-items-center">
-            <input
-              type="text"
-              className="form-control"
-              name="add"
-              onChange={onAddInputValueChange}
-              onKeyPress={onAddTodoKeyPress}
-              value={todoAddInputValue}
-            />
-          </div>
-          <div className="col-sm-2 col-form-label">
-            <button
-              className="btn btn-primary"
-              type="button"
-              onClick={onAddTodoClick}
-            >
-              新增
-            </button>
-          </div>
-        </div>
-      </div>
-      <div className="d-flex justify-content-around mb-3 todo-btns">
-        <button
-          className="btn btn-primary"
-          type="button"
-          onClick={() => setTodoType('all')}
-        >
+    <Container>
+      <TodoAddBar onClick={onAddTodoClick} />
+      <FilterButtons>
+        <PrimaryButton onClick={() => setTodoType('all')}>
           全部任務
-        </button>
-        <button
-          className="btn btn-success"
-          type="button"
-          onClick={() => setTodoType('done')}
-        >
+        </PrimaryButton>
+        <SuccessButton onClick={() => setTodoType('done')}>
           已完成
-        </button>
-        <button
-          className="btn btn-info"
-          type="button"
-          onClick={() => setTodoType('undone')}
-        >
-          未完成
-        </button>
+        </SuccessButton>
+        <InfoButton onClick={() => setTodoType('undone')}>未完成</InfoButton>
         <DangerButton
           onClick={() => {
             setTodoType('all');
@@ -135,8 +93,8 @@ function TodoList() {
         >
           刪除全部
         </DangerButton>
-      </div>
-      <ul className="list-group list-group-flush todo-list">
+      </FilterButtons>
+      <List>
         {filterTodoList.map((element) => (
           <TodoItem
             todo={element}
@@ -146,8 +104,8 @@ function TodoList() {
             onToggleDoneTodoClick={onToggleDoneTodoClick}
           />
         ))}
-      </ul>
-    </div>
+      </List>
+    </Container>
   );
 }
 
